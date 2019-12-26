@@ -1,0 +1,38 @@
+{
+  "name": "term-search",
+  "version": "1.0.0",
+  "description": "REST service that retrieves documents from a [term-tracker](https://github.com/jimkang/term-tracker) file.",
+  "main": "start-term-search.js",
+  "private": true,
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jimkang/term-search.git"
+  },
+  "keywords": [],
+  "author": "Jim Kang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jimkang/term-search/issues"
+  },
+  "homepage": "https://github.com/jimkang/term-search",
+  "devDependencies": {
+    "assert-no-error": "^1.0.0",
+    "omit": "^1.0.1",
+    "request": "^2.88.0",
+    "tape": "^4.12.1"
+  },
+  "dependencies": {
+    "call-next-tick": "^1.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "idmaker": "^0.1.1",
+    "lodash.defaults": "^4.2.0",
+    "lodash.pick": "^4.4.0",
+    "log-format": "^1.0.0",
+    "standard-bail": "^2.0.1",
+    "static-web-archive": "^4.0.5"
+  }
+}
