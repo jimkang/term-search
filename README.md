@@ -11,8 +11,13 @@ Clone this repo.
 After that, there's a `config.js` file you have to create in the project root. It should contain this:
 
     module.exports = {
-      termTrackerFile: '../path/to/my/term-tracker/file.json`
-    ];
+      tracker: {
+        // The path to your term-tracker store file.
+        storeFile: 'your-path/terms.json',
+        // The property on each of the documents that has the analyzed text.
+        textProp: 'caption'
+      }
+    };
 
 License
 -------

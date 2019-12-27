@@ -28,11 +28,7 @@
     "call-next-tick": "^1.1.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "idmaker": "^0.1.1",
-    "lodash.defaults": "^4.2.0",
-    "lodash.pick": "^4.4.0",
     "log-format": "^1.0.0",
-    "standard-bail": "^2.0.1",
-    "static-web-archive": "^4.0.5"
+    "term-tracker": "^2.0.1"
   }
 }

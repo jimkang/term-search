@@ -1,19 +1,28 @@
-/* global process */
+/* global process, __dirname */
 var test = require('tape');
 var assertNoError = require('assert-no-error');
 var TermSearch = require('../term-search');
 var request = require('request');
 var http = require('http');
+var Tracker = require('term-tracker');
+
+const fixturesPath = `${__dirname}/fixtures`;
 
 const port = 5679;
 const serverHost = process.env.SERVER || 'localhost';
 
 var testCases = [
   {
-    name: 'Basic getTerm',
-    path: 'term',
+    name: 'Basic search',
+    path: 'search',
     qs: 'term=cat',
-    expectedStatusCode: 200
+    trackedDocs: [
+      { caption: 'Cat is OK.', id: 'a' },
+      { caption: 'Cat is best! Wily is good cat.', id: 'b' },
+      { caption: 'Cauldron of eggs', id: 'c' }
+    ],
+    expectedStatusCode: 200,
+    expectedBody: [{ ref: 'b', count: 2 }, { ref: 'a', count: 1 }]
   }
 ];
 
@@ -25,9 +34,14 @@ function runTest(testCase) {
   function testMethod(t) {
     var server;
 
+    var tracker = Tracker({
+      storeFile: `${fixturesPath}/tmp.json`,
+      textProp: 'caption'
+    });
+    testCase.trackedDocs.forEach(tracker.track);
     TermSearch(
       {
-        // TODO: Provide tracker
+        tracker
       },
       startServer
     );
@@ -63,7 +77,7 @@ function runTest(testCase) {
       if (res.statusCode !== 200) {
         console.log('body:', body);
       }
-      // TODO: Check body
+      t.deepEqual(body, testCase.expectedBody, 'Results are correct.');
       server.close(t.end);
     }
   }

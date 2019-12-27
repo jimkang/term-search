@@ -7,7 +7,7 @@ function TermSearch({ tracker }, done) {
 
   app.get('/health', respondOK);
 
-  app.get('/term', getTerm);
+  app.get('/search', search);
   app.head(/.*/, respondHead);
 
   // Async init goes here, if it is ever needed.
@@ -19,9 +19,16 @@ function TermSearch({ tracker }, done) {
     next();
   }
 
-  function getTerm(req, res, next) {
-    // TODO.
-    res.status(200).json({ message: 'Got it!' });
+  function search(req, res, next) {
+    if (!req.query.term) {
+      res.status(400).json({ message: 'Missing `term` query param.' });
+      return;
+    }
+
+    var searchResults = sortRefsByCount(
+      tracker.getTerm({ term: req.query.term })
+    );
+    res.status(200).json(searchResults);
     next();
   }
 
@@ -36,6 +43,22 @@ function TermSearch({ tracker }, done) {
     res.end();
     next();
   }
+}
+
+// TODO: term-tracker should handle this.
+function sortRefsByCount({ countsInRefs }) {
+  var refCounts = [];
+  for (var ref in countsInRefs) {
+    refCounts.push({ ref, count: countsInRefs[ref] });
+  }
+  return refCounts.sort(compareByCountDesc);
+}
+
+function compareByCountDesc(a, b) {
+  if (a.count < b.count) {
+    return 1;
+  }
+  return -1;
 }
 
 module.exports = TermSearch;

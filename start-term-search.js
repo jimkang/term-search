@@ -6,15 +6,13 @@ var TermSearch = require('./term-search');
 var logFormat = require('log-format');
 var config = require('./config');
 var http = require('http');
+var Tracker = require('term-tracker');
 
 const port = 5679;
 
-TermSearch(
-  {
-    // TODO: tracker
-  },
-  createServer
-);
+var tracker = Tracker(config.tracker);
+
+TermSearch({ tracker }, createServer);
 
 function createServer(error, app) {
   if (error) {
