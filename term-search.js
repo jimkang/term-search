@@ -25,9 +25,14 @@ function TermSearch({ tracker }, done) {
       return;
     }
 
-    var searchResults = sortRefsByCount(
-      tracker.getTerm({ term: req.query.term })
-    );
+    var trackResults = tracker.getTerm({ term: req.query.term });
+    if (!trackResults) {
+      res.status(200).json([]);
+      next();
+      return;
+    }
+
+    var searchResults = sortRefsByCount(trackResults);
     res.status(200).json(searchResults);
     next();
   }

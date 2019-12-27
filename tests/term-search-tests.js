@@ -23,6 +23,14 @@ var testCases = [
     ],
     expectedStatusCode: 200,
     expectedBody: [{ ref: 'b', count: 2 }, { ref: 'a', count: 1 }]
+  },
+  {
+    name: 'No results',
+    path: 'search',
+    qs: 'term=cat',
+    trackedDocs: [],
+    expectedStatusCode: 200,
+    expectedBody: []
   }
 ];
 
